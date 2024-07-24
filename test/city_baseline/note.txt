@@ -1,0 +1,12 @@
+1-5: 3 walkers
+6-10: 4 walkers
+11-15: rainy
+	weather.cloudiness = 90 
+    	weather.precipitation = 80
+    	weather.precipitation_deposits = 80
+    	weather.wind_intensity = 30
+16-20: foggy
+    	weather.cloudiness = 90
+    	weather.fog_density = 90
+    	weather.fog_distance = 50
+    	weather.wind_intensity = 20
