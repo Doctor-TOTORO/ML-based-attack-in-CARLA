@@ -15,14 +15,13 @@ vehicle_base:
     perception:
       activate: true # when not activated, objects positions will be retrieved from server directly
       camera:
-        visualize: 4 # how many camera images need to be visualized. 0 means no visualization for camera
-        num: 4 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
+        visualize: 3 # how many camera images need to be visualized. 0 means no visualization for camera
+        num: 3 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
         # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
         positions:
           - [2.5, 0, 1.0, 0]
           - [0.0, 0.3, 1.8, 100]
           - [0.0, -0.3, 1.8, -100]
-          - [-2.0, 0.0, 1.5, 180]
       
       lidar: # lidar sensor configuration, check CARLA sensor reference for more details
         visualize: true
@@ -43,12 +42,20 @@ vehicle_base:
         show_animation: true # whether to show real-time trajectory plotting
 
   behavior:
+    max_speed: 95
+    tailgate_speed: 105 # when a vehicle needs to be close to another vehicle asap
+    overtake_allowed: false # whether overtake allowed, typically false for platoon leader
+    collision_time_ahead: 1.3 # used for collision checking
+    overtake_counter_recover: 35
     ignore_traffic_light: false # whether to ignore traffic light
-    collision_time_ahead: 2.0 # used for collision checking
+    local_planner:
+      trajectory_dt:
 
 carla_traffic_manager:
   random: false # whether to random select vehicles' color and model
   ignore_lights_percentage: 0 # whether set the traffic ignore traffic lights
+  global_distance: 4.0
+  global_speed_perc: -300
   vehicle_list:
     - spawn_position: [330.00, 42.2642, 2.00, 0.00, 0.00, 0.00]
-    - spawn_position: [95.00, 55.2642, 0.00, 0.00, -75.00, 0.00]
+    - spawn_position: [395.00, 55.2642, 1.00, 0.00, -75.00, 0.00]

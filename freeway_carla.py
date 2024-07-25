@@ -23,40 +23,31 @@ def run_scenario(opt, scenario_params):
         cav_world = CavWorld(opt.apply_ml)
 
         # create scenario manager
-        scenario_manager = sim_api.ScenarioManager(scenario_params,
-                                                   opt.apply_ml,
-                                                   opt.version,
-                                                   town='Town04',
-                                                   cav_world=cav_world)
-        if opt.record:
-            scenario_manager.client. \
-                start_recorder("freeway_carla.log", True)
+        scenario_manager = \
+            sim_api.ScenarioManager(scenario_params,
+                                    opt.apply_ml,
+                                    opt.version,
+                                    town='Town04',
+                                    cav_world=cav_world)
+        scenario_manager.client. \
+            start_recorder("freeway_carla.log", True)
         
 
         # create background traffic in carla
         traffic_manager, bg_veh_list = \
             scenario_manager.create_traffic_carla()
-        
-        for v in bg_veh_list:
-            v.set_autopilot(False)
-            print('1')
+
+        eval_manager = \
+            EvaluationManager(scenario_manager.cav_world,
+                              script_name='freeway_carla',
+                              current_time=scenario_params['current_time'])
 
         spectator = scenario_manager.world.get_spectator()
-        transform = bg_veh_list[0].get_transform()
-        spectator.set_transform(
-            carla.Transform(
-                transform.location +
-                carla.Location(
-                    z=20),
-                carla.Rotation(
-                    pitch=-
-                    90)))
 
         # run steps
         while True:
             scenario_manager.tick()
-            # transform = bg_veh_list[0].get_transform()
-            '''
+            transform = bg_veh_list[1].get_transform()
             spectator.set_transform(
                 carla.Transform(
                     transform.location +
@@ -65,12 +56,11 @@ def run_scenario(opt, scenario_params):
                     carla.Rotation(
                         pitch=-
                         90)))
-            '''
 
     finally:
+        eval_manager.evaluate()
 
-        if opt.record:
-            scenario_manager.client.stop_recorder()
+        scenario_manager.client.stop_recorder()
 
         scenario_manager.close()
 
