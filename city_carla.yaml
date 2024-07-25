@@ -15,26 +15,13 @@ vehicle_base:
     perception:
       activate: true # when not activated, objects positions will be retrieved from server directly
       camera:
-        visualize: 3 # how many camera images need to be visualized. 0 means no visualization for camera
-        num: 3 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
+        visualize: 1 # how many camera images need to be visualized. 0 means no visualization for camera
+        num: 1 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
         # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
-        positions:
-          - [2.5, 0, 1.0, 0]
-          - [0.0, 0.3, 1.8, 100]
-          - [0.0, -0.3, 1.8, -100]
+        positions: [2.5, 0, 1.0, 0 ]
       
       lidar: # lidar sensor configuration, check CARLA sensor reference for more details
         visualize: true
-        channels: 32
-        range: 50
-        points_per_second: 100000
-        rotation_frequency: 20 # the simulation is 20 fps
-        upper_fov: 10.0
-        lower_fov: -30.0
-        dropoff_general_rate: 0.0
-        dropoff_intensity_limit: 1.0
-        dropoff_zero_intensity: 0.0
-        noise_stddev: 0.0
 
     localization:
       activate: true # when not activated, ego position will be retrieved from server directly
@@ -43,37 +30,54 @@ vehicle_base:
 
   behavior:
     max_speed: 70
-    tailgate_speed: 105 # when a vehicle needs to be close to another vehicle asap
+    tailgate_speed: 80 # when a vehicle needs to be close to another vehicle asap
     overtake_allowed: false # whether overtake allowed, typically false for platoon leader
     collision_time_ahead: 1.3 # used for collision checking
     overtake_counter_recover: 35
     ignore_traffic_light: false # whether to ignore traffic light
     local_planner:
-      trajectory_dt:
+      trajectory_dt: 0.25
 
 carla_traffic_manager:
   random: false # whether to random select vehicles' color and model
   ignore_lights_percentage: 0 # whether set the traffic ignore traffic lights
   global_distance: 4.0
   global_speed_perc: -100
-  vehicle_list: ~
-  range:
-    - [ 50, 250, 135, 145, 50, 4, 30]
+  auto_lane_change: true
+  vehicle_list:
+    - spawn_position: [-40, 133, 0.3, 0, 180, 0]
+    - spawn_position: [-30, 133, 0.3, 0, 180, 0]
+    - spawn_position: [-20, 133, 0.3, 0, 180, 0]
+    - spawn_position: [-10, 133, 0.3, 0, 180, 0]
+    - spawn_position: [0, 133, 0.3, 0, 180, 0]
+    - spawn_position: [10, 133, 0.3, 0, 180, 0]
 
 scenario:
   single_cav_list: # this is for merging vehicle or single cav without v2x
-    - name: single_cav
+    - name: cav1
       spawn_position: [-48.82, 80.26, 1.00, 0.00, 90.00, 0.00]
-      # when this is defined, the above parameter will be ignored, and a special map function will
-      # be used to define the spawn position based on the argument
-      spawn_special: [ 0.625 ]
+      destination: [-60.00, 25.00, 0.00]
       sensing:
         perception:
           camera:
-            visualize: 1 # how many camera images need to be visualized. 0 means no visualization for camera
-            num: 1 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
+            visualize: 4 # how many camera images need to be visualized. 0 means no visualization for camera
+            num: 4 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
             # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
             positions:
-              - [ 2.5, 0, 1.0, 0 ]
+              - [2.5, 0, 1.0, 0]
+              - [0.0, 0.3, 1.8, 100]
+              - [0.0, -0.3, 1.8, -100]
+              - [-2.0, 0.0, 1.5, 180]
           lidar:
             visualize: true
+        
+      safety_manager:
+        print_message: true
+        collision_sensor:
+          history_size: 30
+          col_thresh: 1
+        stuck_detector:
+          len_thresh: 500
+          speed_thresh: 0.5
+        traffic_light_detector:
+          light_dist_thresh: 20
