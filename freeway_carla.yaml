@@ -19,7 +19,7 @@ vehicle_base:
         num: 0 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
         # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
         positions: []
-      
+
       lidar: # lidar sensor configuration, check CARLA sensor reference for more details
         visualize: false
 
@@ -43,7 +43,7 @@ carla_traffic_manager:
   ignore_lights_percentage: 0 # whether set the traffic ignore traffic lights
   global_distance: 4.0
   global_speed_perc: -300
-  
+
 scenario:
   single_cav_list:
     - name: single_cav
@@ -64,10 +64,13 @@ scenario:
       sensing:
         perception:
           camera:
-            visualize: 1 # how many camera images need to be visualized. 0 means no visualization for camera
-            num: 1 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
+            visualize: 4 # how many camera images need to be visualized. 0 means no visualization for camera
+            num: 4 # how many cameras are mounted on the vehicle. Maximum 3(frontal, left and right cameras)
             # relative positions (x,y,z,yaw) of the camera. len(positions) should be equal to camera num
             positions:
               - [ 2.5, 0, 1.0, 0 ]
+              - [ 0.0, 0.3, 1.8, 100 ]
+              - [ 0.0, -0.3, 1.8, -100 ]
+              - [ -2.0, 0.0, 1.5, 180 ]
           lidar:
             visualize: true
