@@ -33,7 +33,7 @@ from yolov5.models import yolo
 ROOT = Path(os.path.join(os.getcwd(), "yolov5"))  # relative
 
 model = yolo.Model(cfg=ROOT / "models/yolov5m.yaml")
-classify_model = yolo.ClassificationModel(cfg=ROOT / "models/yolov5m.yaml", model=model)
+classify_model = yolo.ClassificationModel(cfg=ROOT / "data/coco.yaml", model=model)
 
 
 class CameraSensor:
@@ -80,6 +80,7 @@ class CameraSensor:
         else:
             self.sensor = world.spawn_actor(blueprint, spawn_point)
 
+        self.relative_position = relative_position
         self.image = None
         self.timstamp = None
         self.frame = 0
@@ -511,7 +512,6 @@ class PerceptionManager:
         """
         # retrieve current cameras and lidar data
         rgb_images = []
-        count = 0
         for rgb_camera in self.rgb_camera:
             while rgb_camera.image is None:
                 continue
@@ -519,7 +519,8 @@ class PerceptionManager:
                     np.array(
                         rgb_camera.image),
                     cv2.COLOR_BGR2RGB)
-            if count == 0:
+            
+            if rgb_camera.relative_position[0] == 2.5:
                 tensor = torch.tensor(trans_image).unsqueeze(0).permute(0, 3, 1, 2).squeeze().float()
                 attacker = SimBA(classify_model.cuda(), 640)
                 _, max_index = torch.max(classify_model(tensor.unsqueeze(0).cuda()), dim=1)
@@ -529,11 +530,10 @@ class PerceptionManager:
                             fake_tensor.cpu().numpy()),
                         cv2.COLOR_BGR2RGB))
             else:
-                rgb_images.append(trans_image)
+                rgb_images.append(np.zeros((rgb_camera.image_width, rgb_camera.image_height)))
 
         # yolo detection
         yolo_detection = self.ml_manager.object_detector(rgb_images)
-        print(yolo_detection)
         # rgb_images for drawing
         rgb_draw_images = []
 
