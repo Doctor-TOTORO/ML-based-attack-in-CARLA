@@ -22,6 +22,7 @@ class SimBA:
 
     def get_probs(self, x, y):
         output = self.model(self.normalize(x.cuda()))
+        y = y.cuda()
         probs = torch.index_select(F.softmax(output, dim=-1).data, 1, y).cuda()
         return torch.diag(probs).cuda()
 
@@ -31,7 +32,7 @@ class SimBA:
         return preds
 
     # 20-line implementation of SimBA for single image input
-    def simba_single(self, x, y, num_iters=1, epsilon=0.2, targeted=False):
+    def simba_single(self, x, y, num_iters=20, epsilon=0.5, targeted=True):
         n_dims = x.reshape(1, -1).size(1)
         perm = torch.randperm(n_dims)
         x = x.unsqueeze(0)
