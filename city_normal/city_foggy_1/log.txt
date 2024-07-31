@@ -1,0 +1,12 @@
+***********Localization Module***********
+Actor ID: 234
+mean error for GNSS raw data on x-axis: 0.086125 (meter), mean error for GNSS raw data on y-axis: 0.093890 (meter),mean error for GNSS raw data on yaw : 0.079933 (degree) 
+mean error after data fusion on x-axis: 0.044400 (meter), mean error after data fusion  on y-axis: 0.056306 (meter),mean error after data fusion yaw : 0.145345 (degree) 
+
+***********Kinematics Module***********
+Actor ID: 234
+Speed average: 6.898214 (m/s), Speed std: 4.178673 (m/s) 
+Acceleration average: -1.417403 (m/s), Acceleration std: 7.595972 (m/s) 
+TTC average: 5.731155 (m/s), TTC std: 1.870125 (m/s) 
+
+***********Platooning Analysis***********
