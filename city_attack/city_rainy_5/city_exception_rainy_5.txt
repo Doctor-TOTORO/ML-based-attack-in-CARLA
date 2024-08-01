@@ -1,0 +1,24 @@
+---------Exception_Collision---------
+Frame: 5231
+Timestamp: 262.76792249441496
+Transform: Location(-56.40474319458008, 130.69091796875, 0.03398563340306282) Rotation(-0.00707607576623559, 145.68264770507812, -0.413238525390625)
+Actor: vehicle.lincoln.mkz_2017
+Other Actor: vehicle.lincoln.mkz_2017
+Normal Impulse: (233.1819305419922, -1067.751220703125, -189.07763671875)
+--------------------------
+---------Exception_Collision---------
+Frame: 5234
+Timestamp: 262.91792249665014
+Transform: Location(-57.69541931152344, 131.3955078125, 0.03341682255268097) Rotation(-0.011966491118073463, 152.97227478027344, -0.4917907118797302)
+Actor: vehicle.lincoln.mkz_2017
+Other Actor: vehicle.lincoln.mkz_2017
+Normal Impulse: (64.02395629882812, -37.259708404541016, -9.467479705810547)
+--------------------------
+---------Exception_Collision---------
+Frame: 5234
+Timestamp: 262.91792249665014
+Transform: Location(-57.69541931152344, 131.3955078125, 0.03341682255268097) Rotation(-0.011966491118073463, 152.97227478027344, -0.4917907118797302)
+Actor: vehicle.lincoln.mkz_2017
+Other Actor: vehicle.lincoln.mkz_2017
+Normal Impulse: (57.690555572509766, -33.044437408447266, -8.494646072387695)
+--------------------------
