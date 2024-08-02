@@ -28,12 +28,16 @@ from opencda.core.sensing.perception.o3d_lidar_libs import \
     o3d_visualizer_init, o3d_pointcloud_encode, o3d_visualizer_show, \
     o3d_camera_lidar_fusion
 from opencda.customize.attack.simba import SimBA
+from opencda.customize.attack import fgsm
 from yolov5.models import yolo
 
 ROOT = Path(os.path.join(os.getcwd(), "yolov5"))  # relative
 
 model = yolo.Model(cfg=ROOT / "models/yolov5m.yaml")
 classify_model = yolo.ClassificationModel(cfg=ROOT / "data/coco.yaml", model=model)
+classify_model.eval().cuda()
+
+num = 1
 
 
 class CameraSensor:
@@ -522,16 +526,17 @@ class PerceptionManager:
             
             if rgb_camera.relative_position[0] == 2.5:
                 tensor = torch.tensor(trans_image).unsqueeze(0).permute(0, 3, 1, 2).squeeze().float()
-                attacker = SimBA(classify_model.cuda(), 640)
+                attacker = SimBA(classify_model, 640)
                 _, max_index = torch.max(classify_model(tensor.unsqueeze(0).cuda()), dim=1)
                 fake_tensor = attacker.simba_single(tensor.cuda(), max_index)
+                # fake_tensor = fgsm.run_attack_cycle(tensor.unsqueeze(0).cuda(), max_index, classify_model.cuda())
                 rgb_images.append(cv2.cvtColor(
                         np.array(
-                            fake_tensor.cpu().numpy()),
+                            fake_tensor.unsqueeze(0).permute(0, 2, 3, 1).squeeze().cpu()),
                         cv2.COLOR_BGR2RGB))
             else:
                 rgb_images.append(np.zeros((rgb_camera.image_width, rgb_camera.image_height)))
-
+            
         # yolo detection
         yolo_detection = self.ml_manager.object_detector(rgb_images)
         # rgb_images for drawing
