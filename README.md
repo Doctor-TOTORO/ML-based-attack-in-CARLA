@@ -15,11 +15,6 @@ This folder is about both urban scenario settings and motorway scenario settings
 YAML files should be put in /opencda/scenario_testing/config_yaml of OpenCDA folder.
 ## customize
 Codes in this folder are modified from the same-name files from OpenCDA resources, please replace them directly or put them in /opencda/customize of OpenCDA folder.
-
-- perception_manager.py
-  
-- sensors.py
-  
 ## scenario
 Codes for operating specific scenarios are in this folder, please put them into /opencda/scenario_testing of OpenCDA folder.
 ## others
@@ -30,3 +25,4 @@ setup_opencda.txt is for configuring environment, which provides a step-by-step 
 - Copy scenario configuration files (.yaml files) into /OpenCDA/opencda/scenario_testing/config_yaml
 - Copy attack codes into /OpenCDA or anywhere you can use them directly
 - Run the codes as setup_opencda.txt shows
+- The default attack is FGSM, it can be changed to SimBA in line 531 and 532 in perception_manager.py
