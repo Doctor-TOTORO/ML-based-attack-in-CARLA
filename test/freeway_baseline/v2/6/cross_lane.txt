@@ -1,3 +1,0 @@
-Speed: 24.37081463542371, Acceleration: 0.23817762312800791, Steer: -0.0011037727817893028
-
-Vehicle crossed line

@@ -1,9 +1,0 @@
-Time period: 11.484691143035889
-Speed slowing: 6.723224639892578
-Steering: -0.0007912935689091682
-Location: Location(x=-48.499954, y=108.640610, z=-0.001502)
-Max speed: 7.780520160786345Time period: -1720909771.978328
-Speed slowing: 7.587440252304077
-Steering: 0.0
-Location: Location(x=-48.503399, y=107.790611, z=-0.002013)
-Max speed: 8.332694386645214
