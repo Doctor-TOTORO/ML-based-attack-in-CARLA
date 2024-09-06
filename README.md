@@ -1,7 +1,7 @@
 # ML-based-attack-in-CARLA
 The main branch of the repository contains the necessary codes, and the experiments branch is about partial data recorded in this study, which is just for experimental results reference only.
 
-Before testing, please download or copy OpenCDA folder from https://github.com/ucla-mobility/OpenCDA, and YOLOv5 from https://github.com/ultralytics/yolov5.
+Before testing, please download or copy CARLA from https://github.com/carla-simulator/carla, OpenCDA folder from https://github.com/ucla-mobility/OpenCDA, and YOLOv5 from https://github.com/ultralytics/yolov5.
 ______________________________________________________________________________________________________________________
 ## attack
 This folder contains the codes of FGSM and SimBA used in this study. The original resources are as follow:
